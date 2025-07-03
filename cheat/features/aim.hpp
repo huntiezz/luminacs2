@@ -21,7 +21,7 @@ namespace Aim {
 			if (CachedPlayers.empty()) return;
 
 			auto PawnBase = reinterpret_cast<C_CSPlayerPawnBase*>(CachedLocalPlayer.Player);
-			QAngle_t* ViewAngle = reinterpret_cast<QAngle_t*>(reinterpret_cast<uintptr_t>(GetModuleHandleA(X("client.dll"))) + 0x1A75620);
+			QAngle_t* ViewAngle = reinterpret_cast<QAngle_t*>(reinterpret_cast<uintptr_t>(GetModuleHandleA(X("client.dll"))) + 0x1A774D0);
 			QAngle_t BestAngle = {};
 			float BestFov = Settings::FOV;
 			bool FoundTarget = false;
