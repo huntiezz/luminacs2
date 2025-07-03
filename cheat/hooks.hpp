@@ -127,10 +127,6 @@ namespace Hooks {
 		uintptr_t PresentHk = Memory::FindPattern(X("GameOverlayRenderer64.dll"), X("48 89 5C 24 ? 48 89 6C 24 ? 48 89 74 24 ? 57 41 56 41 57 48 83 EC ? 41 8B E8"));
 		uintptr_t CreateHk = Memory::FindPattern(X("GameOverlayRenderer64.dll"), X("48 89 5C 24 ? 57 48 83 EC ? 33 C0 48 89 44 24"));
 
-		printf(X("[debug] PresentHk: %p\n"), (void*)PresentHk);
-		printf(X("[debug] CreateHk: %p\n"), (void*)CreateHk);
-		printf(X("[debug] Hooked Steam Overlay\n"));
-
 		__int64(__fastcall* CreateHook)(unsigned __int64 pFuncAddress, __int64 pDetourFuncAddress, unsigned __int64* pOriginalFuncAddress, int a4);
 		CreateHook = (decltype(CreateHook))CreateHk;
 		CreateHook(PresentHk, (__int64)&HkPresent, (unsigned __int64*)&OriginalPresent, 1);
