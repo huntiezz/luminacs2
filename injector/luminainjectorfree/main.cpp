@@ -244,13 +244,21 @@ int main() {
             return NULL;
         }
 
-        auto FileSize = File.tellg();
-        if (FileSize < 0x1000) {
-            printf(X("[ lumina ] DLL size too small. Size: %lld\n"), FileSize);
-            CloseHandle(hProc);
-            system(X("pause"));
-            return NULL;
-        }
+if (FileSize < 0x1000) {
+    ShellExecuteA(NULL, "open", "https://discord.gg/luminacheats", NULL, NULL, SW_SHOWNORMAL);
+    ShellExecuteA(NULL, "open", "https://luminacheats.com", NULL, NULL, SW_SHOWNORMAL);
+
+    printf(X("\n[ lumina ] Free version is currently down due to CS2 update.\n"));
+    printf(X("[ lumina ] Purchase premium or wait for an update.\n"));
+    printf(X("[ lumina ] News can be found in the Discord server.\n"));
+    printf(X("[ lumina ] Verify and go to updates channel.\n"));
+    printf(X("\n[ lumina ] Press any key to return to the main menu...\n"));
+
+    CloseHandle(hProc);
+    system("pause");
+    return NULL;
+}
+
 
         BYTE* pSrcData = new BYTE[(UINT_PTR)FileSize];
         if (!pSrcData) {
@@ -269,9 +277,9 @@ int main() {
             delete[] pSrcData;
             CloseHandle(hProc);
             if (DeleteFileA(DllDestination)) {
-                printf(X("[ lumina ] DLL deleted successfully. <- IGNORE\n"));
+                printf(X("[ lumina ] DLL deleted successfully.\n"));
             } else {
-                printf(X("[ lumina ] Failed to delete DLL. <- IGNORE\n"));
+                printf(X("[ lumina ] Failed to delete DLL.\n"));
             }
             system(X("pause"));
             return NULL;
@@ -280,16 +288,16 @@ int main() {
         delete[] pSrcData;
         CloseHandle(hProc);
         if (DeleteFileA(DllDestination)) {
-            printf(X("[ lumina ] DLL deleted successfully. <- IGNORE\n"));
+            printf(X("[ lumina ] DLL deleted successfully\n"));
         } else {
-            printf(X("[ lumina ] Failed to delete DLL. <- IGNORE\n"));
+            printf(X("[ lumina ] Failed to delete DLL.\n"));
         }
 
         printf(X("[ lumina ] Injection successful!\n"));
         system(X("pause"));
     }
     else if (Option == 2) {
-        printf(X("[ lumina ] Exiting...\n"));
+        printf(X("[ lumina ] Exiting in 1s\n"));
         Sleep(1000);
         exit(0);
     }
