@@ -237,28 +237,29 @@ int main() {
         }
 
         std::ifstream File(DllDestination, std::ios::binary | std::ios::ate);
-        if (File.fail()) {
-            printf(X("[ lumina ] Failed to open DLL for reading.\n"));
-            CloseHandle(hProc);
-            system(X("pause"));
-            return NULL;
-        }
-
-if (FileSize < 0x1000) {
-    ShellExecuteA(NULL, "open", "https://discord.gg/luminacheats", NULL, NULL, SW_SHOWNORMAL);
-    ShellExecuteA(NULL, "open", "https://luminacheats.com", NULL, NULL, SW_SHOWNORMAL);
-
-    printf(X("\n[ lumina ] Free version is currently down due to CS2 update.\n"));
-    printf(X("[ lumina ] Purchase premium or wait for an update.\n"));
-    printf(X("[ lumina ] News can be found in the Discord server.\n"));
-    printf(X("[ lumina ] Verify and go to updates channel.\n"));
-    printf(X("\n[ lumina ] Press any key to return to the main menu...\n"));
-
-    CloseHandle(hProc);
-    system("pause");
-    return NULL;
-}
-
+	auto FileSize = File.tellg();
+	
+	if (File.fail()) {
+	    printf(X("[ lumina ] Failed to open DLL for reading.\n"));
+	    CloseHandle(hProc);
+	    system(X("pause"));
+	    return NULL;
+	}
+	
+	if (FileSize < 0x1000) {
+	    ShellExecuteA(NULL, "open", "https://discord.gg/luminacheats", NULL, NULL, SW_SHOWNORMAL);
+	    ShellExecuteA(NULL, "open", "https://luminacheats.com", NULL, NULL, SW_SHOWNORMAL);
+	
+	    printf(X("\n[ lumina ] Free version is currently down due to CS2 update.\n"));
+	    printf(X("[ lumina ] Purchase premium or wait for an update.\n"));
+	    printf(X("[ lumina ] News can be found in the Discord server.\n"));
+	    printf(X("[ lumina ] Verify and go to updates channel.\n"));
+	    printf(X("\n[ lumina ] Press any key to return to the main menu...\n"));
+	
+	    CloseHandle(hProc);
+	    system("pause");
+	    return NULL;
+	}
 
         BYTE* pSrcData = new BYTE[(UINT_PTR)FileSize];
         if (!pSrcData) {
