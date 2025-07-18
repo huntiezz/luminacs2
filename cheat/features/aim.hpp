@@ -13,7 +13,7 @@ Vector_t GetEyePos(C_CSPlayerPawn* Entity) {
 }
 
 namespace Aim {
-	void Run() {
+	void Run(CCSGOInput* input) {
 		if (Interface::Source2EngineToClient->IsInGame() && Interface::Source2EngineToClient->IsConnected()) {
 			if (!Settings::Aimbot) return;
 			if (!ImGui::IsKeyDown((ImGuiKey)Settings::Keybind)) return;
@@ -21,7 +21,7 @@ namespace Aim {
 			if (CachedPlayers.empty()) return;
 
 			auto PawnBase = reinterpret_cast<C_CSPlayerPawnBase*>(CachedLocalPlayer.Player);
-			QAngle_t* ViewAngle = reinterpret_cast<QAngle_t*>(reinterpret_cast<uintptr_t>(GetModuleHandleA(X("client.dll"))) + 0x1A774E0);
+			QAngle_t ViewAngles = input->GetViewAngles();
 			QAngle_t BestAngle = {};
 			float BestFov = Settings::FOV;
 			bool FoundTarget = false;
@@ -37,7 +37,7 @@ namespace Aim {
 				if (Settings::VisibleOnly && (Trace.m_pHitEntity != Player.Player || !Trace.IsVisible())) continue;
 
 				QAngle_t TempAngle = CalcAngles(PawnBase->m_vecLastClipCameraPos(), Player.BoneData[Settings::CurrentBoneId].Position);
-				float TempFov = GetFov(*ViewAngle, TempAngle);
+				float TempFov = GetFov(ViewAngles, TempAngle);
 
 				if (TempFov < BestFov) {
 					BestAngle = TempAngle;
@@ -47,7 +47,8 @@ namespace Aim {
 			}
 
 			if (FoundTarget) {
-				*ViewAngle = SmoothAngle(*ViewAngle, BestAngle, Settings::Smoothing);
+				QAngle_t Smoothed = SmoothAngle(ViewAngles, BestAngle, Settings::Smoothing);
+				input->SetViewAngle(Smoothed);
 			}
 		}
 	}

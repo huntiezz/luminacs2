@@ -23,8 +23,11 @@ extern IMGUI_IMPL_API LRESULT ImGui_ImplWin32_WndProcHandler(HWND hWnd, UINT msg
 
 typedef void(__thiscall* FrameStageNotify)(void* _this, int curStage);
 FrameStageNotify OriginalFrameStageNotify = nullptr;
-
 static VTableHook<FrameStageNotify> FrameStageNotifyHook;
+
+typedef bool(__thiscall* CreateMove)(CCSGOInput* input, int seq, bool active);
+CreateMove OriginalCreateMove = nullptr;
+static VTableHook<CreateMove> CreateMoveHook;
 
 namespace Hooks {
 	typedef HRESULT(__stdcall* Present)(IDXGISwapChain* pSwapChain, UINT SyncInterval, UINT Flags);
@@ -118,9 +121,16 @@ namespace Hooks {
 		OriginalFrameStageNotify(_this, curStage);
 
 		if (curStage == 9) {
-			Aim::Run();
 			Cache::Run();
 		}
+	}
+
+	bool __fastcall HkCreateMove(CCSGOInput* input, int seq, bool active) {
+		const bool Return = OriginalCreateMove(input, seq, active);
+
+		Aim::Run(input);
+
+		return Return;
 	}
 
 	void Initialize() {
@@ -132,5 +142,6 @@ namespace Hooks {
 		CreateHook(PresentHk, (__int64)&HkPresent, (unsigned __int64*)&OriginalPresent, 1);
 
 		FrameStageNotifyHook.Hook(Interface::Source2Client, 36, HkFrameStageNotify, &OriginalFrameStageNotify);
+		CreateMoveHook.Hook(Interface::CSGOInput, 5, HkCreateMove, &OriginalCreateMove);
 	}
 }

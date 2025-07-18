@@ -1,10 +1,4 @@
-#include "injector.h"
-
-#if defined(DISABLE_OUTPUT)
-#define ILog(data, ...)
-#else
-#define ILog(text, ...) printf(text, __VA_ARGS__);
-#endif
+#include "inj.h"
 
 #ifdef _WIN64
 #define CURRENT_ARCH IMAGE_FILE_MACHINE_AMD64
@@ -12,7 +6,7 @@
 #define CURRENT_ARCH IMAGE_FILE_MACHINE_I386
 #endif
 
-bool ManualMapDll(HANDLE hProc, BYTE* pSrcData, SIZE_T FileSize, bool ClearHeader, bool ClearNonNeededSections, bool AdjustProtections, bool SEHExceptionSupport, DWORD fdwReason, LPVOID lpReserved) {
+bool Map(HANDLE hProc, BYTE* pSrcData, SIZE_T FileSize, bool ClearHeader, bool ClearNonNeededSections, bool AdjustProtections, bool SEHExceptionSupport, DWORD fdwReason, LPVOID lpReserved) {
 	IMAGE_NT_HEADERS* pOldNtHeader = nullptr;
 	IMAGE_OPTIONAL_HEADER* pOldOptHeader = nullptr;
 	IMAGE_FILE_HEADER* pOldFileHeader = nullptr;

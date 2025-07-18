@@ -42,7 +42,7 @@ public:
         this->DrawList->AddRectFilled(TitleBarMin, TitleBarMax, this->ColTitleBar, 4, ImDrawFlags_RoundCornersTop);
         this->DrawList->AddRect(TitleBarMin, TitleBarMax, this->ColBorder, 4, ImDrawFlags_RoundCornersTop);
 
-        const char* Title = X("Lumina CS2 Free");
+        const char* Title = X("Lumina (Free)");
         ImVec2 TitleSize = ImGui::CalcTextSize(Title);
         ImVec2 TitleCenter = TitleBarMin + ImVec2((this->MenuSize.x - TitleSize.x) * 0.5f, (28 - TitleSize.y) * 0.5f);
         this->DrawList->AddText(TitleCenter, this->ColText, Title);
@@ -53,7 +53,7 @@ public:
         ImVec2 FooterBarMax = this->MenuPos + this->MenuSize;
         this->DrawList->AddRectFilled(FooterBarMin, FooterBarMax, this->ColTitleBar, 4, ImDrawFlags_RoundCornersBottom);
         this->DrawList->AddRect(FooterBarMin, FooterBarMax, this->ColBorder, 4, ImDrawFlags_RoundCornersBottom);
-        const char* FooterText = X("Version: 1");
+        const char* FooterText = X("Version: 0.0.1-beta");
         ImVec2 TextSize = ImGui::CalcTextSize(FooterText);
         ImVec2 FooterCenter = FooterBarMin + ImVec2((this->MenuSize.x - TextSize.x) * 0.5f, (28 - TextSize.y) * 0.5f);
         this->DrawList->AddText(FooterCenter, this->ColText, FooterText);

@@ -90,8 +90,8 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
-    <IntDir>$(Platform)\$(Configuration)\</IntDir>
-    <OutDir>C:\Users\binaryreader\Desktop\lumina cs2 free\build</OutDir>
+    <IntDir>$(SolutionDir)/build/temp</IntDir>
+    <OutDir>$(SolutionDir)/build</OutDir>
     <TargetName>luminacheats.com</TargetName>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
@@ -153,6 +153,7 @@
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp20</LanguageStandard>
       <BufferSecurityCheck>false</BufferSecurityCheck>
+      <DebugInformationFormat>None</DebugInformationFormat>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -163,12 +164,12 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="injector.cpp" />
+    <ClCompile Include="inj.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="hijacking.h" />
-    <ClInclude Include="injector.h" />
+    <ClInclude Include="bytes.hpp" />
+    <ClInclude Include="inj.h" />
     <ClInclude Include="x.hpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

@@ -209,6 +209,23 @@ public:
 	}
 };
 
+class CCSGOInput {
+public:
+	QAngle_t GetViewAngles() {
+		int64_t(__fastcall * FnGetViewAngles)(CCSGOInput*, int32_t);
+		static auto GetViewAngles = reinterpret_cast<decltype(FnGetViewAngles)>(Memory::FindPattern(X("client.dll"), X("4C 8B C1 85 D2 74 08 48 8D 05 ? ? ? ? C3")));
+
+		return *reinterpret_cast<QAngle_t*>(GetViewAngles(this, 0));
+	}
+
+	void SetViewAngle(QAngle_t& Angle) {
+		int64_t(__fastcall * FnSetViewAngle)(void*, int32_t, QAngle_t&);
+		static auto SetViewAngle = reinterpret_cast<decltype(FnSetViewAngle)>(Memory::FindPattern(X("client.dll"), X("85 D2 75 3F 48")));
+
+		SetViewAngle(this, 0, std::ref(Angle));
+	}
+};
+
 namespace Interface {
 	typedef void* (*CreateInterfaceFn)(const char* pName, int* pReturnCode);
 
@@ -224,6 +241,7 @@ namespace Interface {
 	IGameResourceService* GameResourceServiceClient = CreateInterface<IGameResourceService>(X("engine2.dll"), X("GameResourceServiceClientV001"));
 	void* Source2Client = CreateInterface<void*>(X("client.dll"), X("Source2Client002"));
 	CGameTraceManager* GameTraceManager = *reinterpret_cast<CGameTraceManager**>(Memory::GetAbsoluteAddress(Memory::FindPattern(X("client.dll"), X("48 8B 0D ? ? ? ? 4C 8B C3 66 89 44 24")), 3, 0));
+	CCSGOInput* CSGOInput = *reinterpret_cast<CCSGOInput**>(Memory::GetRelativeAddress(Memory::FindPattern(X("client.dll"), X("48 8B 0D ? ? ? ? 4C 8B C6 8B 10 E8")), 0x3, 0x7));
 }
 
 namespace Stuff {

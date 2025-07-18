@@ -63,4 +63,11 @@ namespace Memory {
 
         return Address;
     }
+
+    uintptr_t GetRelativeAddress(uintptr_t Address, uint32_t RVAOffset, uint32_t RIPOffset) {
+        uint32_t RVA = *reinterpret_cast<uint32_t*>(Address + RVAOffset);
+        uintptr_t RIP = Address + RIPOffset;
+
+        return RVA + RIP;
+    }
 }
