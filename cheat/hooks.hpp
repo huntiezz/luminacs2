@@ -120,7 +120,7 @@ namespace Hooks {
 	void __fastcall HkFrameStageNotify(void* _this, int curStage) {
 		OriginalFrameStageNotify(_this, curStage);
 
-		if (curStage == 9) {
+		if (curStage == 8) {
 			Cache::Run();
 		}
 	}

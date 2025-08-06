@@ -31,10 +31,10 @@ namespace Aim {
 				if (Settings::AimIgnoreTeam && (Player.TeamNum == CachedLocalPlayer.TeamNum)) continue;
 
 				Ray_t Ray = {};
-				TraceFilter_t Filter(0x1C3003, CachedLocalPlayer.Player, nullptr, 4);
+				TraceFilter_t Filter(0x1C3003, CachedLocalPlayer.Player, nullptr, 7);
 				GameTrace_t Trace = {};
 				Interface::GameTraceManager->TraceShape(&Ray, GetEyePos(CachedLocalPlayer.Player), Player.BoneData[6].Position, &Filter, &Trace);
-				if (Settings::VisibleOnly && (Trace.m_pHitEntity != Player.Player || !Trace.IsVisible())) continue;
+				if (Settings::VisibleOnly && (Trace.m_pHitEntity != Player.Player)) continue;
 
 				QAngle_t TempAngle = CalcAngles(PawnBase->m_vecLastClipCameraPos(), Player.BoneData[Settings::CurrentBoneId].Position);
 				float TempFov = GetFov(ViewAngles, TempAngle);

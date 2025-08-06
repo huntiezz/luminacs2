@@ -49,7 +49,7 @@ namespace Cache {
 				CCSPlayerController* Controller = reinterpret_cast<CCSPlayerController*>(Entity);
 				if (!Controller) continue;
 				if (!Controller->m_hPawn().valid()) continue;
-				if (Controller->IsLocalPlayer()) {
+				if (Controller->m_bIsLocalPlayerController()) {
 					LocalPlayerIdx = i;
 					continue;
 				}
