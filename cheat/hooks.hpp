@@ -14,6 +14,7 @@
 #include "source2/handle.hpp"
 #include "source2/vector.hpp"
 #include "source2/viewmatrix.hpp"
+#include "source2/matrix.hpp"
 #include "source2/interface.hpp"
 #include "features/cache.hpp"
 #include "features/aim.hpp"
@@ -25,7 +26,7 @@ typedef void(__thiscall* FrameStageNotify)(void* _this, int curStage);
 FrameStageNotify OriginalFrameStageNotify = nullptr;
 static VTableHook<FrameStageNotify> FrameStageNotifyHook;
 
-typedef bool(__thiscall* CreateMove)(CCSGOInput* input, int seq, bool active);
+typedef void(__thiscall* CreateMove)(CCSGOInput* input, int seq, bool active);
 CreateMove OriginalCreateMove = nullptr;
 static VTableHook<CreateMove> CreateMoveHook;
 
@@ -125,12 +126,10 @@ namespace Hooks {
 		}
 	}
 
-	bool __fastcall HkCreateMove(CCSGOInput* input, int seq, bool active) {
-		const bool Return = OriginalCreateMove(input, seq, active);
-
+	void __fastcall HkCreateMove(CCSGOInput* input, int seq, bool active) {
 		Aim::Run(input);
 
-		return Return;
+		OriginalCreateMove(input, seq, active);
 	}
 
 	void Initialize() {

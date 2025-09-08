@@ -73,7 +73,7 @@ namespace ESP {
 				Ray_t Ray = {};
 				TraceFilter_t Filter(0x1C3003, CachedLocalPlayer.Player, nullptr, 7);
 				GameTrace_t Trace = {};
-				Interface::GameTraceManager->TraceShape(&Ray, GetEyePos(CachedLocalPlayer.Player), Player.BoneData[6].Position, &Filter, &Trace);
+				Interface::GameTraceManager->TraceShape(&Ray, GetEyePos(CachedLocalPlayer.Player), Player.BoneData->GetOrigin(6), &Filter, &Trace);
 
 				ImColor EspColor;
 				if (Trace.m_pHitEntity != Player.Player) {

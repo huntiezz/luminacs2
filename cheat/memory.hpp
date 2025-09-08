@@ -42,6 +42,8 @@ namespace Memory {
             }
         }
 
+        printf("Pattern \"%s\" not found\n", PatternTarget);
+
         return NULL;
     }
 

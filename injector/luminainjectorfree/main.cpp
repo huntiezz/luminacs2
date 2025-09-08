@@ -55,33 +55,46 @@ int main() {
     if (Option == 1) {
         system(X("cls"));
 
-        DWORD PID = GetProcessIdByName((wchar_t*)X(L"cs2.exe"));
-        if (PID == 0) {
-            printf(X("[ lumina ] CS2 is not running. Please make sure it is open!\n"));
-            system(X("pause"));
+        char Buffer[128];
+        printf(X("\nEnter key:\n"));
+        scanf_s("%127s", Buffer, (unsigned)_countof(Buffer));
 
-            return NULL;
-        }
+        std::string K = Buffer;
+        if (K == X("Luminaaaaa")) {
+            system(X("cls"));
 
-        HANDLE Process = OpenProcess(PROCESS_ALL_ACCESS, FALSE, PID);
+            DWORD PID = GetProcessIdByName((wchar_t*)X(L"cs2.exe"));
+            if (PID == 0) {
+                printf(X("[ lumina ] CS2 is not running. Please make sure it is open!\n"));
+                system(X("pause"));
 
-        Sleep(2500);
+                return NULL;
+            }
 
-        printf(X("[ lumina ] Injecting into CS2...\n"));
+            HANDLE Process = OpenProcess(PROCESS_ALL_ACCESS, FALSE, PID);
 
-        Sleep(2500);
+            Sleep(2500);
 
-        if (!Map(Process, (BYTE*)DllData, sizeof(DllData))) {
-            printf(X("[ lumina ] Injection failed...\n"));
+            printf(X("[ lumina ] Injecting into CS2...\n"));
+
+            Sleep(2500);
+
+            if (!Map(Process, (BYTE*)DllData, sizeof(DllData))) {
+                printf(X("[ lumina ] Injection failed...\n"));
+                CloseHandle(Process);
+                system(X("pause"));
+
+                return NULL;
+            }
+
+            printf(X("[ lumina ] Injection successful!\n"));
             CloseHandle(Process);
             system(X("pause"));
-
-            return NULL;
         }
-
-        printf(X("[ lumina ] Injection successful!\n"));
-        CloseHandle(Process);
-        system(X("pause"));
+        else {
+            printf(X("[ lumina ] Invalid key!\n"));
+            system(X("pause"));
+        }
     }
     else if (Option == 2) {
         printf(X("[ lumina ] Exiting in 1s\n"));

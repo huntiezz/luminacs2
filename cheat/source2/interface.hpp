@@ -8,11 +8,11 @@ ViewMatrix VM;
 class CEngineClient {
 public:
 	bool IsInGame() {
-		return Virtual::Call<36U, bool>(this);
+		return Virtual::Call<37U, bool>(this);
 	}
 
 	bool IsConnected() {
-		return Virtual::Call<37U, bool>(this);
+		return Virtual::Call<38U, bool>(this);
 	}
 };
 
@@ -59,19 +59,22 @@ public:
 	SCHEMA_ADD_OFFSET(Vector_t, m_vecMaxs, 0x4C);
 };
 
-class CGameSceneNode {
+class CSkeletonInstance {
 public:
-	SCHEMA_ADD_OFFSET(bool, m_bDormant, 0xEF);
+	MEM_PAD(0x1EC);
+	int BoneCount;
+	MEM_PAD(0x18);
+	int Mask;
+	MEM_PAD(0x4);
+	Matrix2x4_t* BoneCache;
 };
 
-struct CBoneData {
-	Vector_t Position;
-	MEM_PAD(0x14);
-};
-class CSkeletonInstance : public CGameSceneNode {
+class CGameSceneNode {
 public:
-	CBoneData* GetBoneData() {
-		return *(CBoneData**)((DWORD64)this + 0x170 + 0x80);
+	SCHEMA_ADD_OFFSET(bool, m_bDormant, 0x10B);
+
+	CSkeletonInstance* GetSkeletonInstance() {
+		return Virtual::Call<8U, CSkeletonInstance*>(this);
 	}
 };
 
@@ -108,7 +111,12 @@ private:
 
 class C_CSPlayerPawnBase {
 public:
-	SCHEMA_ADD_OFFSET(Vector_t, m_vecLastClipCameraPos, 0x1604);
+	Vector_t GetShootPosition() {
+		Vector_t ShootPosition = {};
+		Virtual::Call<170U, void>(this, &ShootPosition);
+
+		return ShootPosition;
+	}
 };
 
 struct Ray_t {

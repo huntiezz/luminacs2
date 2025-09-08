@@ -2,14 +2,14 @@
 
 class PlayerCache {
 public:
-	PlayerCache(C_BaseEntity* a1, C_CSPlayerPawn* plyr, int hp, const char* nm, Vector_t pos, CBoneData* bd, int tnum) : Entity(a1), Player(plyr), Health(hp), Name(nm), Origin(pos), BoneData(bd), TeamNum(tnum) {}
+	PlayerCache(C_BaseEntity* a1, C_CSPlayerPawn* plyr, int hp, const char* nm, Vector_t pos, Matrix2x4_t* bd, int tnum) : Entity(a1), Player(plyr), Health(hp), Name(nm), Origin(pos), BoneData(bd), TeamNum(tnum) {}
 
 	C_BaseEntity* Entity;
 	C_CSPlayerPawn* Player;
 	int Health;
 	const char* Name;
 	Vector_t Origin;
-	CBoneData* BoneData;
+	Matrix2x4_t* BoneData;
 	int TeamNum;
 };
 
@@ -59,7 +59,7 @@ namespace Cache {
 				if (Player->m_iHealth() <= 0) continue;
 				if (Player->m_pGameSceneNode()->m_bDormant()) continue;
 
-				auto BoneData = static_cast<CSkeletonInstance*>(Player->m_pGameSceneNode())->GetBoneData();
+				auto BoneData = Player->m_pGameSceneNode()->GetSkeletonInstance()->BoneCache;
 				if (!BoneData) continue;
 
 				auto LocalEntity = Interface::GameResourceServiceClient->Instance->Get(LocalPlayerIdx);

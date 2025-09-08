@@ -170,6 +170,7 @@
     <ClInclude Include="settings.hpp" />
     <ClInclude Include="source2\handle.hpp" />
     <ClInclude Include="source2\interface.hpp" />
+    <ClInclude Include="source2\matrix.hpp" />
     <ClInclude Include="source2\vector.hpp" />
     <ClInclude Include="source2\viewmatrix.hpp" />
     <ClInclude Include="source2\virtual.hpp" />
